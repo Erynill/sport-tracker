@@ -8,38 +8,38 @@ pub fn migrations() -> Migrations<'static> {
         "
       CREATE TABLE sports (
         id INTEGER PRIMARY KEY,
-        nom TEXT NOT NULL UNIQUE
+        name TEXT NOT NULL UNIQUE
       );
 
       CREATE TABLE exercises (
         id INTEGER PRIMARY KEY,
-        nom TEXT NOT NULL UNIQUE,
         sport_id INTEGER NOT NULL,
+        name TEXT NOT NULL UNIQUE,
         FOREIGN KEY (sport_id) REFERENCES sports(id)
       );
 
       CREATE TABLE sessions (
         id INTEGER PRIMARY KEY,
+        sport_id INTEGER NOT NULL,
         date_session TEXT NOT NULL CHECK (date_session IS date(date_session)),
         notes TEXT,
-        sport_id INTEGER NOT NULL,
         FOREIGN KEY (sport_id) REFERENCES sports(id)
       );
 
-      CREATE TABLE series (
+      CREATE TABLE sets (
         id INTEGER PRIMARY KEY,
-        rep INTEGER NOT NULL CHECK (rep > 0),
-        weight_serie INTEGER NOT NULL CHECK (weight_serie >= 0),
         exercise_id INTEGER NOT NULL,
         session_id INTEGER NOT NULL,
+        rep INTEGER NOT NULL CHECK (rep > 0),
+        weight_set INTEGER NOT NULL CHECK (weight_set >= 0),
         FOREIGN KEY (exercise_id) REFERENCES exercises(id),
         FOREIGN KEY (session_id) REFERENCES sessions(id)
       );
 
-      CREATE TABLE track_weight (
+      CREATE TABLE weight_tracking (
         id INTEGER PRIMARY KEY,
         date_weight TEXT NOT NULL CHECK (date_weight IS date(date_weight)),
-        value_weight REAL
+        weight_tracked REAL NOT NULL
       );
       "
       )
