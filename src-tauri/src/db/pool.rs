@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use rusqlite::{ Connection, Error };
+use rusqlite::{ Connection, Result };
 
-pub fn open_connection(db_path: PathBuf) -> Result<Connection, Error> {
+pub fn open_connection(db_path: PathBuf) -> Result<Connection> {
   let conn = Connection::open(db_path)?;
 
   conn.pragma_update(None, "foreign_keys", true)?;
