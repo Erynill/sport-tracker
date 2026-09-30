@@ -9,3 +9,11 @@
   --color-accent-soft: #5dcaa5;
   --color-muted: #6b7570;
 }
+
+span {
+  @apply text-muted text-lg;
+}
+
+h1 {
+  @apply text-4xl font-bold;
+}
