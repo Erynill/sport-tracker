@@ -2,6 +2,7 @@ use rusqlite::{ Result, Row };
 use serde::{ Deserialize, Serialize };
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Exercise {
   id: i64,
   sport_id: i64,

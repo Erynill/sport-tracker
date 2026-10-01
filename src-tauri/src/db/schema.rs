@@ -8,7 +8,8 @@ pub fn migrations() -> Migrations<'static> {
         "
       CREATE TABLE sports (
         id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL UNIQUE
+        name TEXT NOT NULL UNIQUE,
+        icon TEXT NOT NULL
       );
 
       CREATE TABLE exercises (

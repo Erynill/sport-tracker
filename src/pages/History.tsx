@@ -15,7 +15,7 @@ export default function History() {
         </div>
       </header>
       <section className="py-15 px-10">
-        <HistoryCard />
+        <HistoryCard icon="info" title="Titre" subtitle="soustitre" date="date" />
       </section>
     </>
   );

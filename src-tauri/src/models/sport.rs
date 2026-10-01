@@ -5,6 +5,7 @@ use serde::{ Deserialize, Serialize };
 pub struct Sport {
   id: i64,
   name: String,
+  icon: String,
 }
 
 impl Sport {
@@ -12,6 +13,7 @@ impl Sport {
     Ok(Sport {
       id: row.get("id")?,
       name: row.get("name")?,
+      icon: row.get("icon")?,
     })
   }
 }

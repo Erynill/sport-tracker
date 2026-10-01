@@ -1,5 +1,5 @@
 mod exercise;
 mod session;
-mod set;
+mod exercise_set;
 mod sport;
 mod weight_tracking;
