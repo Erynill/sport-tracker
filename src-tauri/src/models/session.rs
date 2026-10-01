@@ -6,6 +6,7 @@ use serde::{ Deserialize, Serialize };
 pub struct Session {
   id: i64,
   sport_id: i64,
+  name: String,
   date_session: NaiveDate,
   notes: Option<String>,
 }
@@ -15,6 +16,7 @@ impl Session {
     Ok(Session {
       id: row.get("id")?,
       sport_id: row.get("sport_id")?,
+      name: row.get("name")?,
       date_session: row.get("date_session")?,
       notes: row.get("notes")?,
     })

@@ -10,7 +10,7 @@ const links = [
 export default function Layout() {
   return (
     <div className="flex h-screen bg-app text-white font-medium">
-      <aside className="flex flex-col w-1/5 bg-sidebar p-6 border-muted/30 border-r gap-10">
+      <aside className="flex flex-col w-1/5 bg-sidebar p-6 border-line border-r gap-10">
         <div className="flex flex-row gap-2 items-center">
           <div className="bg-accent p-1 rounded-lg">
             <ChartLine className="text-sidebar" />

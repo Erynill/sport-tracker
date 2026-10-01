@@ -21,6 +21,7 @@ pub fn migrations() -> Migrations<'static> {
       CREATE TABLE sessions (
         id INTEGER PRIMARY KEY,
         sport_id INTEGER NOT NULL,
+        name TEXT NOT NULL,
         date_session TEXT NOT NULL CHECK (date_session IS date(date_session)),
         notes TEXT,
         FOREIGN KEY (sport_id) REFERENCES sports(id)

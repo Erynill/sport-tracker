@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import Button from "../components/ui/Button";
+import HistoryCard from "../components/ui/card/HistoryCard";
 
 export default function History() {
   return (
@@ -13,6 +14,9 @@ export default function History() {
           </Button>
         </div>
       </header>
+      <section className="py-15 px-10">
+        <HistoryCard />
+      </section>
     </>
   );
 }
