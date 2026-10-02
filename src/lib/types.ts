@@ -1,3 +1,9 @@
+interface ExerciseSet {
+  id: number;
+  exerciseId: number;
+  sessionId: number;
+}
+
 interface Exercise {
   id: number;
   sportId: number;
@@ -12,10 +18,14 @@ interface Session {
   notes: string | null;
 }
 
-interface ExerciseSet {
+interface Sport {
   id: number;
-  exerciseId: number;
-  sessionId: number;
+  name: string;
+  icon: string;
 }
 
-interface;
+interface WeightTracking {
+  id: number;
+  dateWeight: string;
+  weightTracked: number;
+}
