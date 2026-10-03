@@ -6,7 +6,7 @@ use tauri::{ AppHandle, Manager };
 mod pool;
 mod schema;
 
-pub struct DbConnection(Mutex<Connection>);
+pub struct DbConnection(pub Mutex<Connection>);
 
 pub fn init_db(app_handle: &AppHandle) -> Result<DbConnection, Box<dyn Error>> {
   let db_path = app_handle.path().app_data_dir()?.join("sport_tracker.db");

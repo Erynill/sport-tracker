@@ -44,6 +44,17 @@ pub fn migrations() -> Migrations<'static> {
         weight_tracked REAL NOT NULL
       );
       "
+      ),
+
+      //Migration 2 : ajout des sports et exercices
+      M::up(
+        "
+      INSERT INTO sports(name, icon)
+      VALUES ('Musculation', 'dumbbell');
+
+      INSERT INTO exercises(sport_id, name)
+      VALUES (1, 'Pompe');
+      "
       )
     ]
   )
