@@ -1,5 +1,5 @@
-mod exercise_set;
-mod exercise;
-mod session;
+pub mod exercise_set;
+pub mod exercise;
+pub mod session;
 pub mod sport;
-mod weight_tracking;
+pub mod weight_tracking;
