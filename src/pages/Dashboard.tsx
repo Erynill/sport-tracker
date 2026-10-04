@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import Button from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 function getCurrentWeekLabel(): String {
   const currentDate = new Date();
@@ -10,6 +11,8 @@ function getCurrentWeekLabel(): String {
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   return (
     <>
       <header className="flex justify-between">
@@ -18,7 +21,7 @@ export default function Dashboard() {
           <h1 className="pt-1">Dashboard</h1>
         </div>
         <div className="self-center text-xl">
-          <Button>
+          <Button onClick={() => navigate("/session/new")}>
             <Plus />
             Nouvelle séance
           </Button>
