@@ -36,12 +36,14 @@ export default function Select({ id, label, options, value, placeholder, onChang
 
   return (
     <div ref={containerRef} className="relative text-lg">
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="text-white/70">
+        {label}
+      </label>
       <button
         type="button"
         id={id}
         onClick={() => setOpen(!open)}
-        className="flex w-full bg-app border border-line rounded-lg justify-between items-center p-1 pr-2 cursor-pointer focus:border-accent/80"
+        className="flex w-full bg-app border border-line rounded-lg justify-between items-center p-1 px-2 cursor-pointer focus:border-accent/80"
       >
         <p className={`flex gap-3 items-center ${selected ? "" : "text-muted"}`}>
           {selected?.icon && <DynamicIcon name={selected?.icon as IconName} className="text-accent-soft" />}
@@ -50,7 +52,7 @@ export default function Select({ id, label, options, value, placeholder, onChang
         <ChevronDown className={`text-muted transition-all ${open && "rotate-180"}`} />
       </button>
       {open && (
-        <ul className="absolute border border-line w-full rounded-lg z-10">
+        <ul className="absolute border border-line w-full rounded-lg z-10 bg-app">
           {options.map((option) => (
             <li key={option.value}>
               <button
