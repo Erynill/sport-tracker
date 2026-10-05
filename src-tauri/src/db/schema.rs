@@ -55,7 +55,13 @@ pub fn migrations() -> Migrations<'static> {
       INSERT INTO exercises(sport_id, name)
       VALUES (1, 'Pompe');
       "
-      )
+      ),
+
+      //Migration 3 : ajout de la course
+      M::up("
+      INSERT INTO sports(name, icon)
+      VALUES ('Course à pied', 'sport-shoe');
+      ")
     ]
   )
 }
