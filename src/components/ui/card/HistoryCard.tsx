@@ -13,6 +13,7 @@ export default function HistoryCard({ icon, title, subtitle, date, onClick }: Hi
   return (
     <>
       <button
+        type="button"
         onClick={onClick}
         className="flex items-center px-5 py-3 gap-5 bg-card border border-line w-full rounded-xl cursor-pointer transition-all hover:border-accent hover:scale-101"
       >

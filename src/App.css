@@ -17,3 +17,38 @@ span {
 h1 {
   @apply text-4xl font-bold;
 }
+
+@supports (appearance: base-select) {
+  select {
+    appearance: base-select;
+  }
+
+  select::picker(select) {
+    appearance: base-select;
+    background-color: #0a0f0d;
+    border-radius: 8px;
+    color: white;
+    border-color: #1f2a25;
+  }
+
+  select::picker-icon {
+    display: none;
+  }
+
+  select option {
+    padding: 4px;
+  }
+
+  select option:hover {
+    background-color: var(--color-card);
+  }
+
+  select option:checked {
+    background-color: color-mix(in oklab, var(--color-accent) 10%, transparent);
+    color: var(--color-accent-soft);
+  }
+
+  select option::checkmark {
+    display: none;
+  }
+}
