@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useSport } from "../hooks/useSport";
 import { useState } from "react";
 import Input from "../components/ui/Input";
+import ExercisePicker from "../components/form/ExercisePicker";
 
 export default function NewSession() {
   const navigate = useNavigate();
   const { data: sports } = useSport();
+
   const [sportId, setSportId] = useState<number | null>(null);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
 
@@ -19,8 +21,8 @@ export default function NewSession() {
         </button>
         <h1>Nouvelle séance</h1>
       </header>
-      <section className="mt-15">
-        <form className="flex flex-col gap-10">
+      <section className="mt-10">
+        <form className="flex flex-col gap-6">
           <div className="grid grid-cols-2 gap-4 bg-card border border-line p-5 px-7 rounded-xl">
             <div>
               <Input label="Nom de la séance" type="text" placeholder="Nom..." />
@@ -38,6 +40,13 @@ export default function NewSession() {
                 options={sports?.map((sport) => ({ value: sport.id, label: sport.name, icon: sport.icon })) ?? []}
               />
             </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between">
+              <h3 className="text-xl">Exercices</h3>
+              <ExercisePicker sportId={sportId} />
+            </div>
+            <div className="bg-card border border-line p-5 px-7 rounded-xl"></div>
           </div>
         </form>
       </section>

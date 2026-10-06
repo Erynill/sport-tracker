@@ -6,6 +6,6 @@ export const api = {
   },
 
   exercise: {
-    listBySport: (sportId: number) => invoke<Exercise[]>("list_exercises", { sportId }),
+    listBySport: (sportId: number) => invoke<Exercise[]>("list_exercises_by_sport", { sportId }),
   },
 };

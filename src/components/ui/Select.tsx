@@ -52,7 +52,7 @@ export default function Select({ id, label, options, value, placeholder, onChang
         <ChevronDown className={`text-muted transition-all ${open && "rotate-180"}`} />
       </button>
       {open && (
-        <ul className="absolute border border-line w-full rounded-lg z-10 bg-app">
+        <ul className="absolute border border-line w-full rounded-lg z-10 bg-app max-h-60 overflow-y-auto">
           {options.map((option) => (
             <li key={option.value}>
               <button

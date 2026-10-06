@@ -3,8 +3,9 @@ import { api } from "../lib/api-tauri";
 
 export function useExerciseBySport(sportId: number) {
   return useQuery({
-    queryKey: ["exercisesBySport"],
+    queryKey: ["exercisesBySport", sportId],
     queryFn: () => api.exercise.listBySport(sportId),
     staleTime: Infinity,
+    enabled: !!sportId,
   });
 }
