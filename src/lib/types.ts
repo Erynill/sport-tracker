@@ -1,3 +1,5 @@
+//models types
+
 interface ExerciseSet {
   id: number;
   exerciseId: number;
@@ -28,4 +30,11 @@ interface WeightTracking {
   id: number;
   dateWeight: string;
   weightTracked: number;
+}
+
+//form types
+
+interface ExerciseFormSession {
+  id: number;
+  name: string;
 }
