@@ -23,7 +23,7 @@ export default function NewSession() {
   }
 
   function handleRemoveExercise(index: number): void {
-    setExercises((prev) => prev.filter((e, i) => i !== index));
+    setExercises((prev) => prev.filter((_, i) => i !== index));
   }
 
   function handleUpdateExercise(
