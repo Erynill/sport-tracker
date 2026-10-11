@@ -30,7 +30,7 @@ export default function ExercisePicker({ sportId, onSelect }: ExercisePickerProp
         type="button"
         onClick={() => setOpen(!open)}
         disabled={!sportId}
-        className="flex items-center gap-2 text-accent-soft border border-line p-1 px-2 rounded-xl cursor-pointer transition-colors hover:border-accent-soft focus:border-accent-soft"
+        className="flex items-center gap-2 text-accent-soft border border-line p-1 px-2 rounded-xl cursor-pointer transition-all hover:border-accent-soft focus:border-accent-soft active:scale-95"
       >
         <Plus />
         Ajouter un exercice
