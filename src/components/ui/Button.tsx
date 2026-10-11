@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const buttonColor = {
   primary:
-    "flex items-center gap-2 text-sidebar font-medium bg-accent p-2 px-4 rounded-xl cursor-pointer transition-all hover:bg-accent-soft hover:scale-110 disabled:cursor-not-allowed disabled:bg-muted disabled:scale-100 active:bg-accent/70 active:scale-105",
+    "flex items-center gap-2 font-medium p-2 px-4 rounded-xl text-sidebar bg-accent cursor-pointer transition-all hover:bg-accent-soft hover:scale-110 disabled:cursor-not-allowed disabled:bg-muted disabled:scale-100 active:bg-accent/70 active:scale-105",
 };
 
 export default function Button({ variant = "primary", children, ...props }: ButtonProps) {
