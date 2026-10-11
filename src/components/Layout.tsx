@@ -33,7 +33,7 @@ export default function Layout() {
           ))}
         </nav>
       </aside>
-      <main className="p-8 w-4/5">
+      <main className="p-8 w-4/5 overflow-y-auto scrollbar-none">
         <Outlet />
       </main>
     </div>
