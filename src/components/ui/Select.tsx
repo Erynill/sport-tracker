@@ -57,6 +57,7 @@ export default function Select({ id, label, options, value, placeholder, onChang
             <li key={option.value}>
               <button
                 type="button"
+                disabled={selected === option}
                 onClick={() => {
                   onChange(option.value);
                   setOpen(false);
