@@ -5,6 +5,7 @@ import { useSport } from "../hooks/useSport";
 import { useState } from "react";
 import Input from "../components/ui/Input";
 import ExercisePicker from "../components/form/ExercisePicker";
+import ExerciseBlock from "../components/form/ExerciseBlock";
 
 export default function NewSession() {
   const navigate = useNavigate();
@@ -12,6 +13,43 @@ export default function NewSession() {
 
   const [sportId, setSportId] = useState<number | null>(null);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [exercises, setExercises] = useState<ExerciseFormSession[]>([]);
+
+  function handleAddExercise(exerciseId: number, exerciseName: string): void {
+    setExercises((prev) => [
+      ...prev,
+      { id: exerciseId, name: exerciseName, sets: [{ reps: "", weightSet: "", rpe: "" }] },
+    ]);
+  }
+
+  function handleRemoveExercise(index: number): void {
+    setExercises((prev) => prev.filter((e, i) => i !== index));
+  }
+
+  function handleUpdateExercise(
+    exerciseIndex: number,
+    setIndex: number,
+    field: "reps" | "weightSet" | "rpe",
+    value: number | "",
+  ): void {
+    setExercises((prev) =>
+      prev.map((exercise, i) =>
+        i === exerciseIndex
+          ? { ...exercise, sets: exercise.sets.map((set, j) => (j === setIndex ? { ...set, [field]: value } : set)) }
+          : exercise,
+      ),
+    );
+  }
+
+  function handleAddSet(exerciceIndex: number): void {
+    setExercises((prev) =>
+      prev.map((exercise, i) =>
+        i === exerciceIndex
+          ? { ...exercise, sets: [...exercise.sets, { reps: "", weightSet: "", rpe: "" }] }
+          : exercise,
+      ),
+    );
+  }
 
   return (
     <>
@@ -25,10 +63,17 @@ export default function NewSession() {
         <form className="flex flex-col gap-6">
           <div className="grid grid-cols-2 gap-4 bg-card border border-line p-5 px-7 rounded-xl">
             <div>
-              <Input label="Nom de la séance" type="text" placeholder="Nom..." />
+              <Input id="nameSession" label="Nom de la séance" type="text" placeholder="Nom..." />
             </div>
             <div>
-              <Input label="Date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+              <Input
+                id="dateSession"
+                label="Date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
             </div>
             <div>
               <Select
@@ -36,7 +81,10 @@ export default function NewSession() {
                 label="Sport"
                 value={sportId ?? ""}
                 placeholder="Selectionnez votre sport"
-                onChange={(value) => setSportId(Number(value))}
+                onChange={(value) => {
+                  setExercises([]);
+                  setSportId(Number(value));
+                }}
                 options={sports?.map((sport) => ({ value: sport.id, label: sport.name, icon: sport.icon })) ?? []}
               />
             </div>
@@ -44,9 +92,20 @@ export default function NewSession() {
           <div className="flex flex-col gap-3">
             <div className="flex justify-between">
               <h3 className="text-xl">Exercices</h3>
-              <ExercisePicker sportId={sportId} />
+              <ExercisePicker sportId={sportId} onSelect={handleAddExercise} />
             </div>
-            <div className="bg-card border border-line p-5 px-7 rounded-xl"></div>
+            {exercises.map((exercise, i) => (
+              <ExerciseBlock
+                exercise={exercise}
+                index={i}
+                onRemove={() => handleRemoveExercise(i)}
+                onUpdateSet={(setIndex, field, value) => handleUpdateExercise(i, setIndex, field, value)}
+                onAddSet={() => handleAddSet(i)}
+              />
+            ))}
+            <div className="border border-dashed border-line rounded-xl bg-card text-muted text-center py-10 text-lg">
+              Aucun autre exercice ajouté
+            </div>
           </div>
         </form>
       </section>
