@@ -4,6 +4,8 @@ interface ExerciseSet {
   id: number;
   exerciseId: number;
   sessionId: number;
+  rep: number;
+  weightSet: number;
 }
 
 interface Exercise {
