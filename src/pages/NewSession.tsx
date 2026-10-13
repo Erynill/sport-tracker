@@ -6,19 +6,21 @@ import { useState } from "react";
 import Input from "../components/ui/Input";
 import ExercisePicker from "../components/form/ExercisePicker";
 import ExerciseBlock from "../components/form/ExerciseBlock";
+import Button from "../components/ui/Button";
 
 export default function NewSession() {
   const navigate = useNavigate();
   const { data: sports } = useSport();
 
   const [sportId, setSportId] = useState<number | null>(null);
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [dateSession, setDateSession] = useState(() => new Date().toLocaleDateString("en-CA"));
+  const [sessionName, setSessionName] = useState<string | null>(null);
   const [exercises, setExercises] = useState<ExerciseFormSession[]>([]);
 
   function handleAddExercise(exerciseId: number, exerciseName: string): void {
     setExercises((prev) => [
       ...prev,
-      { id: exerciseId, name: exerciseName, sets: [{ reps: "", weightSet: "", rpe: "" }] },
+      { exerciseId: exerciseId, name: exerciseName, sets: [{ reps: "", weightSet: "", rpe: "" }] },
     ]);
   }
 
@@ -29,7 +31,7 @@ export default function NewSession() {
   function handleUpdateExercise(
     exerciseIndex: number,
     setIndex: number,
-    field: "reps" | "weightSet" | "rpe",
+    field: "reps" | "weightSet",
     value: number | "",
   ): void {
     setExercises((prev) =>
@@ -51,6 +53,10 @@ export default function NewSession() {
     );
   }
 
+  function handleSubmit() {
+    const payload = {};
+  }
+
   return (
     <>
       <header className="flex items-center gap-3">
@@ -63,15 +69,22 @@ export default function NewSession() {
         <form className="flex flex-col gap-6">
           <div className="grid grid-cols-2 gap-4 bg-card border border-line p-5 px-7 rounded-xl">
             <div>
-              <Input id="nameSession" label="Nom de la séance" type="text" placeholder="Nom..." />
+              <Input
+                id="nameSession"
+                label="Nom de la séance"
+                value={sessionName ?? ""}
+                onChange={(e) => setSessionName(e.target.value)}
+                type="text"
+                placeholder="Nom..."
+              />
             </div>
             <div>
               <Input
                 id="dateSession"
                 label="Date"
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={dateSession}
+                onChange={(e) => setDateSession(e.target.value)}
                 required
               />
             </div>
@@ -106,6 +119,14 @@ export default function NewSession() {
             <div className="border border-dashed border-line rounded-xl bg-card text-muted text-center py-10 text-lg">
               Aucun autre exercice ajouté
             </div>
+          </div>
+          <div className="grid grid-cols-3 gap-5">
+            <Button type="button" onClick={() => navigate(-1)} variant="neutralWarning">
+              <div className="text-center w-full">Annuler</div>
+            </Button>
+            <Button type="button" onClick={handleSubmit} variant="primary" className="col-span-2">
+              <div className="text-center w-full">Enregistrer la séance</div>
+            </Button>
           </div>
         </form>
       </section>

@@ -5,7 +5,7 @@ interface ExerciseBlockProps {
   exercise: ExerciseFormSession;
   index: number;
   onRemove: () => void;
-  onUpdateSet: (setIndex: number, field: "reps" | "weightSet" | "rpe", value: number | "") => void;
+  onUpdateSet: (setIndex: number, field: "reps" | "weightSet", value: number | "") => void;
   onAddSet: () => void;
 }
 
@@ -18,15 +18,14 @@ export default function ExerciseBlock({ exercise, onRemove, onUpdateSet, onAddSe
           <Trash className="text-muted cursor-pointer transition-all hover:text-warning hover:scale-110" />
         </button>
       </div>
-      <div className="grid grid-cols-[0.1fr_1fr_1fr_1fr] gap-5 px-7 items-center">
+      <div className="grid grid-cols-[0.1fr_1fr_1fr] gap-5 gap-y-2 px-7 items-center">
         <span></span>
         <span>REPS</span>
         <span>POIDS (KG)</span>
-        <span>RPE</span>
+        {exercise.sets.map((set, i) => (
+          <SetRow set={set} index={i + 1} onChange={(field, value) => onUpdateSet(i, field, value)} />
+        ))}
       </div>
-      {exercise.sets.map((set, i) => (
-        <SetRow set={set} index={i + 1} onChange={(field, value) => onUpdateSet(i, field, value)} />
-      ))}
       <div>
         <button
           type="button"

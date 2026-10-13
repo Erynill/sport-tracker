@@ -37,7 +37,7 @@ interface WeightTracking {
 //form types
 
 interface ExerciseFormSession {
-  id: number;
+  exerciseId: number;
   name: string;
   sets: SetFormSession[];
 }
@@ -45,5 +45,4 @@ interface ExerciseFormSession {
 interface SetFormSession {
   reps: number | "";
   weightSet: number | "";
-  rpe?: number | "";
 }

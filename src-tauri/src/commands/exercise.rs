@@ -8,11 +8,11 @@ pub async fn list_exercises_by_sport(db: State<'_, DbConnection>, sport_id: i64)
   let conn = db.0.lock().map_err(|e| e.to_string())?;
 
   let mut stmt = conn
-    .prepare("SELECT * FROM exercises WHERE sport_id = :id ORDER BY name ASC")
+    .prepare("SELECT * FROM exercises WHERE sport_id = ?1 ORDER BY name ASC")
     .map_err(|e| e.to_string())?;
 
   let exercises = stmt
-    .query_map(&[(":id", &sport_id)], |row| Exercise::from_row(row))
+    .query_map([sport_id], |row| Exercise::from_row(row))
     .map_err(|e| e.to_string())?
     .collect::<Result<Vec<Exercise>>>()
     .map_err(|e| e.to_string())?;
