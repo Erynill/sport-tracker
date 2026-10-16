@@ -25,7 +25,7 @@ export default function NewSession() {
   function handleAddExercise(exerciseId: number, exerciseName: string): void {
     setExercises((prev) => [
       ...prev,
-      { exerciseId: exerciseId, name: exerciseName, sets: [{ rep: "", weightSet: "" }] },
+      { exerciseId: exerciseId, name: exerciseName, sets: [{ rep: "", weightSet: "", rpe: "" }] },
     ]);
   }
 
@@ -36,7 +36,7 @@ export default function NewSession() {
   function handleUpdateExercise(
     exerciseIndex: number,
     setIndex: number,
-    field: "rep" | "weightSet",
+    field: "rep" | "weightSet" | "rpe",
     value: number | "",
   ): void {
     setExercises((prev) =>
@@ -51,12 +51,12 @@ export default function NewSession() {
   function handleAddSet(exerciceIndex: number): void {
     setExercises((prev) =>
       prev.map((exercise, i) =>
-        i === exerciceIndex ? { ...exercise, sets: [...exercise.sets, { rep: "", weightSet: "" }] } : exercise,
+        i === exerciceIndex ? { ...exercise, sets: [...exercise.sets, { rep: "", weightSet: "", rpe: "" }] } : exercise,
       ),
     );
   }
 
-  async function handleSubmit(e: React.SubmitEvent) {
+  async function handleSubmit(e: React.SubmitEvent): Promise<void> {
     e.preventDefault();
 
     const payload = {
@@ -69,6 +69,7 @@ export default function NewSession() {
         sets: exercise.sets.map((set) => ({
           rep: set.rep === "" ? undefined : Number(set.rep),
           weightSet: set.weightSet === "" ? undefined : Number(set.weightSet),
+          rpe: set.rpe === "" ? undefined : Number(set.rpe),
         })),
       })),
     };

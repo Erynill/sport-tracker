@@ -10,6 +10,7 @@ use crate::db::DbConnection;
 pub struct NewSetPayload {
   rep: i32,
   weight_set: i32,
+  rpe: Option<f64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -45,12 +46,14 @@ pub async fn create_full_session(db: State<'_, DbConnection>, payload: NewSessio
 
   {
     let mut stmt = tx
-      .prepare("INSERT INTO sets (exercise_id, session_id, rep, weight_set) VALUES (?1, ?2, ?3, ?4)")
+      .prepare("INSERT INTO sets (exercise_id, session_id, rep, weight_set, rpe) VALUES (?1, ?2, ?3, ?4, ?5)")
       .map_err(|e| e.to_string())?;
 
     for exercise in &payload.exercises {
       for set in &exercise.sets {
-        stmt.execute(params![exercise.exercise_id, session_id, set.rep, set.weight_set]).map_err(|e| e.to_string())?;
+        stmt
+          .execute(params![exercise.exercise_id, session_id, set.rep, set.weight_set, set.rpe])
+          .map_err(|e| e.to_string())?;
       }
     }
   }

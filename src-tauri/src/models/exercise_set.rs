@@ -9,6 +9,7 @@ pub struct ExerciseSet {
   session_id: i64,
   rep: i32,
   weight_set: i32,
+  rpe: Option<f64>,
 }
 
 impl ExerciseSet {
@@ -19,6 +20,7 @@ impl ExerciseSet {
       session_id: row.get("session_id")?,
       rep: row.get("rep")?,
       weight_set: row.get("weight_set")?,
+      rpe: row.get("rpe")?,
     })
   }
 }

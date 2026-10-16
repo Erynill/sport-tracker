@@ -6,6 +6,7 @@ export const setSessionFormSchema = z.object({
     .int("Le nombre de répétitions doit être entier")
     .positive("Le nombre de répétition doit être supérieur à 0"),
   weightSet: z.number().min(0, "Le poids ne peut pas être négatif"),
+  rpe: z.number().min(1).max(10, "Le RPE est une note comprise entre 1 et 10").optional(),
 });
 
 export const exerciseFormSessionSchema = z.object({
@@ -15,7 +16,7 @@ export const exerciseFormSessionSchema = z.object({
 
 export const newSessionSchema = z.object({
   sportId: z.number(),
-  name: z.string().max(20, "Le nom ne doit pas excéder 20 caractères"),
+  name: z.string().max(30, "Le nom ne doit pas excéder 30 caractères"),
   dateSession: z.iso.date("La date doit être sous le format ISO 8601"),
   notes: z.string().max(200, "Vos notes doivent comportés maximum 200 caractères").optional(),
   exercises: z.array(exerciseFormSessionSchema).min(1, "Une séance doit avoir au moins un exercice"),

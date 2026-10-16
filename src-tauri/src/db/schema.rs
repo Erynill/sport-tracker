@@ -61,6 +61,11 @@ pub fn migrations() -> Migrations<'static> {
       M::up("
       INSERT INTO sports(name, icon)
       VALUES ('Course à pied', 'sport-shoe');
+      "),
+
+      //Migration 4 : ajout de la colonne rpe (ressenti noté sur entre 1 et 10) sur la table sets
+      M::up("
+      ALTER TABLE sets ADD COLUMN rpe REAL CHECK (rpe BETWEEN 1 AND 10);
       ")
     ]
   )

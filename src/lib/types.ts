@@ -6,6 +6,7 @@ interface ExerciseSet {
   sessionId: number;
   rep: number;
   weightSet: number;
+  rpe?: number;
 }
 
 interface Exercise {
@@ -19,7 +20,7 @@ interface Session {
   sportId: number;
   name: string;
   dateSession: Date;
-  notes: string | null;
+  notes?: string;
 }
 
 interface Sport {
@@ -45,4 +46,5 @@ interface ExerciseFormSession {
 interface SetFormSession {
   rep: number | "";
   weightSet: number | "";
+  rpe: number | "";
 }
