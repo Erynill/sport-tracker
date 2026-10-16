@@ -3,7 +3,7 @@ import Input from "../ui/Input";
 interface SetRowProps {
   set: SetFormSession;
   index: number;
-  onChange: (field: "reps" | "weightSet", value: number | "") => void;
+  onChange: (field: "rep" | "weightSet", value: number | "") => void;
 }
 
 export default function SetRow({ set, index, onChange }: SetRowProps) {
@@ -13,8 +13,8 @@ export default function SetRow({ set, index, onChange }: SetRowProps) {
       <Input
         id={`reps${index}`}
         type="number"
-        value={set.reps}
-        onChange={(e) => onChange("reps", e.target.value === "" ? "" : Number(e.target.value))}
+        value={set.rep}
+        onChange={(e) => onChange("rep", e.target.value === "" ? "" : Number(e.target.value))}
       />
       <Input
         id={`weightSet${index}`}

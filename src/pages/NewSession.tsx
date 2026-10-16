@@ -7,20 +7,25 @@ import Input from "../components/ui/Input";
 import ExercisePicker from "../components/form/ExercisePicker";
 import ExerciseBlock from "../components/form/ExerciseBlock";
 import Button from "../components/ui/Button";
+import { newSessionSchema } from "../lib/schemas";
+import { useCreateFullSession } from "../hooks/useSession";
+import TextArea from "../components/ui/TextArea";
 
 export default function NewSession() {
   const navigate = useNavigate();
   const { data: sports } = useSport();
+  const { mutateAsync: createFullSession } = useCreateFullSession();
 
   const [sportId, setSportId] = useState<number | null>(null);
   const [dateSession, setDateSession] = useState(() => new Date().toLocaleDateString("en-CA"));
-  const [sessionName, setSessionName] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [notes, setNotes] = useState<string | null>(null);
   const [exercises, setExercises] = useState<ExerciseFormSession[]>([]);
 
   function handleAddExercise(exerciseId: number, exerciseName: string): void {
     setExercises((prev) => [
       ...prev,
-      { exerciseId: exerciseId, name: exerciseName, sets: [{ reps: "", weightSet: "", rpe: "" }] },
+      { exerciseId: exerciseId, name: exerciseName, sets: [{ rep: "", weightSet: "" }] },
     ]);
   }
 
@@ -31,7 +36,7 @@ export default function NewSession() {
   function handleUpdateExercise(
     exerciseIndex: number,
     setIndex: number,
-    field: "reps" | "weightSet",
+    field: "rep" | "weightSet",
     value: number | "",
   ): void {
     setExercises((prev) =>
@@ -46,15 +51,40 @@ export default function NewSession() {
   function handleAddSet(exerciceIndex: number): void {
     setExercises((prev) =>
       prev.map((exercise, i) =>
-        i === exerciceIndex
-          ? { ...exercise, sets: [...exercise.sets, { reps: "", weightSet: "", rpe: "" }] }
-          : exercise,
+        i === exerciceIndex ? { ...exercise, sets: [...exercise.sets, { rep: "", weightSet: "" }] } : exercise,
       ),
     );
   }
 
-  function handleSubmit() {
-    const payload = {};
+  async function handleSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+
+    const payload = {
+      sportId,
+      name,
+      dateSession,
+      notes,
+      exercises: exercises.map((exercise) => ({
+        exerciseId: exercise.exerciseId,
+        sets: exercise.sets.map((set) => ({
+          rep: set.rep === "" ? undefined : Number(set.rep),
+          weightSet: set.weightSet === "" ? undefined : Number(set.weightSet),
+        })),
+      })),
+    };
+
+    const result = newSessionSchema.safeParse(payload);
+    if (!result.success) {
+      console.log(result.error);
+      return;
+    }
+
+    try {
+      await createFullSession(result.data);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -66,26 +96,16 @@ export default function NewSession() {
         <h1>Nouvelle séance</h1>
       </header>
       <section className="mt-10">
-        <form className="flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="grid grid-cols-2 gap-4 bg-card border border-line p-5 px-7 rounded-xl">
-            <div>
+            <div className="col-span-2">
               <Input
                 id="nameSession"
                 label="Nom de la séance"
-                value={sessionName ?? ""}
-                onChange={(e) => setSessionName(e.target.value)}
+                value={name ?? ""}
+                onChange={(e) => setName(e.target.value)}
                 type="text"
                 placeholder="Nom..."
-              />
-            </div>
-            <div>
-              <Input
-                id="dateSession"
-                label="Date"
-                type="date"
-                value={dateSession}
-                onChange={(e) => setDateSession(e.target.value)}
-                required
               />
             </div>
             <div>
@@ -101,6 +121,24 @@ export default function NewSession() {
                 options={sports?.map((sport) => ({ value: sport.id, label: sport.name, icon: sport.icon })) ?? []}
               />
             </div>
+            <div>
+              <Input
+                id="dateSession"
+                label="Date"
+                type="date"
+                value={dateSession}
+                onChange={(e) => setDateSession(e.target.value)}
+                required
+              />
+            </div>
+            <div className="col-span-2">
+              <TextArea
+                id="notes"
+                label="Notes (optionnel)"
+                value={notes ?? ""}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </div>
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-between">
@@ -109,6 +147,7 @@ export default function NewSession() {
             </div>
             {exercises.map((exercise, i) => (
               <ExerciseBlock
+                key={i}
                 exercise={exercise}
                 index={i}
                 onRemove={() => handleRemoveExercise(i)}
@@ -124,7 +163,7 @@ export default function NewSession() {
             <Button type="button" onClick={() => navigate(-1)} variant="neutralWarning">
               <div className="text-center w-full">Annuler</div>
             </Button>
-            <Button type="button" onClick={handleSubmit} variant="primary" className="col-span-2">
+            <Button type="submit" variant="primary" className="col-span-2">
               <div className="text-center w-full">Enregistrer la séance</div>
             </Button>
           </div>

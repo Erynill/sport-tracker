@@ -43,6 +43,6 @@ interface ExerciseFormSession {
 }
 
 interface SetFormSession {
-  reps: number | "";
+  rep: number | "";
   weightSet: number | "";
 }

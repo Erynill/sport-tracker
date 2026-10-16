@@ -8,7 +8,7 @@ use crate::db::DbConnection;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NewSetPayload {
-  reps: i32,
+  rep: i32,
   weight_set: i32,
 }
 
@@ -50,7 +50,7 @@ pub async fn create_full_session(db: State<'_, DbConnection>, payload: NewSessio
 
     for exercise in &payload.exercises {
       for set in &exercise.sets {
-        stmt.execute(params![exercise.exercise_id, session_id, set.reps, set.weight_set]).map_err(|e| e.to_string())?;
+        stmt.execute(params![exercise.exercise_id, session_id, set.rep, set.weight_set]).map_err(|e| e.to_string())?;
       }
     }
   }

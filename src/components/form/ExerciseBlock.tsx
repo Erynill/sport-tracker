@@ -5,7 +5,7 @@ interface ExerciseBlockProps {
   exercise: ExerciseFormSession;
   index: number;
   onRemove: () => void;
-  onUpdateSet: (setIndex: number, field: "reps" | "weightSet", value: number | "") => void;
+  onUpdateSet: (setIndex: number, field: "rep" | "weightSet", value: number | "") => void;
   onAddSet: () => void;
 }
 
@@ -23,7 +23,7 @@ export default function ExerciseBlock({ exercise, onRemove, onUpdateSet, onAddSe
         <span>REPS</span>
         <span>POIDS (KG)</span>
         {exercise.sets.map((set, i) => (
-          <SetRow set={set} index={i + 1} onChange={(field, value) => onUpdateSet(i, field, value)} />
+          <SetRow key={i} set={set} index={i + 1} onChange={(field, value) => onUpdateSet(i, field, value)} />
         ))}
       </div>
       <div>
