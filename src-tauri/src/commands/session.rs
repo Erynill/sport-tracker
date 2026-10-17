@@ -3,7 +3,7 @@ use rusqlite::{ Result, params };
 use serde::Deserialize;
 use tauri::State;
 
-use crate::{ db::DbConnection, models::{ Session, SessionWithSport } };
+use crate::{ db::DbConnection, models::{ SessionWithSport } };
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
