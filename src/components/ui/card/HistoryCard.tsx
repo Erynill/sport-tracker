@@ -24,7 +24,7 @@ export default function HistoryCard({ icon, title, subtitle, date, onClick }: Hi
           <p className="text-lg">{title}</p>
           <p className="text-muted">{subtitle}</p>
         </div>
-        <div className="flex text-muted gap-3">
+        <div className="flex text-muted gap-5">
           <p>{date}</p>
           <ChevronRight />
         </div>

@@ -35,6 +35,11 @@ interface WeightTracking {
   weightTracked: number;
 }
 
+interface SessionWithSport {
+  session: Session;
+  sport: Sport;
+}
+
 //form types
 
 interface ExerciseFormSession {

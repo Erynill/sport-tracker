@@ -1,9 +1,9 @@
 use chrono::NaiveDate;
-use rusqlite::params;
+use rusqlite::{ Result, params };
 use serde::Deserialize;
 use tauri::State;
 
-use crate::db::DbConnection;
+use crate::{ db::DbConnection, models::{ Session, SessionWithSport } };
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -60,4 +60,26 @@ pub async fn create_full_session(db: State<'_, DbConnection>, payload: NewSessio
 
   tx.commit().map_err(|e| e.to_string())?;
   Ok(session_id)
+}
+
+#[tauri::command]
+pub async fn list_sessions_history(db: State<'_, DbConnection>) -> Result<Vec<SessionWithSport>, String> {
+  let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+  let mut stmt = conn
+    .prepare(
+      "SELECT s.id, s.sport_id, s.name AS session_name, s.date_session, s.notes, sp.name AS sport_name, sp.icon
+      FROM sessions AS s 
+      JOIN sports AS sp ON sp.id = s.sport_id
+      ORDER BY s.date_session DESC"
+    )
+    .map_err(|e| e.to_string())?;
+
+  let sessions_history = stmt
+    .query_map([], |row| SessionWithSport::from_row(row))
+    .map_err(|e| e.to_string())?
+    .collect::<Result<Vec<SessionWithSport>>>()
+    .map_err(|e| e.to_string())?;
+
+  Ok(sessions_history)
 }

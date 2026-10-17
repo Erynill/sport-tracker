@@ -19,7 +19,12 @@ pub fn run() {
     })
     .plugin(tauri_plugin_opener::init())
     .invoke_handler(
-      tauri::generate_handler![sport::list_sports, exercise::list_exercises_by_sport, session::create_full_session]
+      tauri::generate_handler![
+        sport::list_sports,
+        exercise::list_exercises_by_sport,
+        session::create_full_session,
+        session::list_sessions_history
+      ]
     )
     .run(tauri::generate_context!())
     .expect("Une erreur a eu lieu au démarrage");

@@ -5,11 +5,11 @@ use serde::{ Deserialize, Serialize };
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Session {
-  id: i64,
-  sport_id: i64,
-  name: String,
-  date_session: NaiveDate,
-  notes: Option<String>,
+  pub id: i64,
+  pub sport_id: i64,
+  pub name: String,
+  pub date_session: NaiveDate,
+  pub notes: Option<String>,
 }
 
 impl Session {

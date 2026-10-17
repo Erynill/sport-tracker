@@ -4,9 +4,9 @@ use serde::{ Deserialize, Serialize };
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Sport {
-  id: i64,
-  name: String,
-  icon: String,
+  pub id: i64,
+  pub name: String,
+  pub icon: String,
 }
 
 impl Sport {

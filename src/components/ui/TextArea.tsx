@@ -7,9 +7,11 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 export default function TextArea({ id, label, ...props }: TextAreaProps) {
   return (
     <div className="text-lg">
-      <label htmlFor={id} className="text-white/70">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className="text-white/70">
+          {label}
+        </label>
+      )}
       <textarea
         name={id}
         id={id}

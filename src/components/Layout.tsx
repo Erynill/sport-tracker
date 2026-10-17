@@ -10,7 +10,7 @@ const links = [
 export default function Layout() {
   return (
     <div className="flex h-screen bg-app text-white font-medium">
-      <aside className="flex flex-col w-1/5 bg-sidebar p-6 border-line border-r gap-10">
+      <aside className="flex flex-col w-1/4 bg-sidebar p-6 border-line border-r gap-10">
         <div className="flex flex-row gap-2 items-center">
           <div className="bg-accent p-1 rounded-lg">
             <ChartLine className="text-sidebar" />
@@ -24,7 +24,7 @@ export default function Layout() {
               to={to}
               end={to === "/"}
               className={({ isActive }) =>
-                `flex flex-row gap-2 p-1 rounded-lg transition-colors ${isActive ? "bg-accent/10 text-accent-soft" : "text-muted hover:bg-card hover:text-white/80"}`
+                `flex flex-row gap-2 p-1 rounded-lg text-lg transition-colors ${isActive ? "bg-accent/10 text-accent-soft" : "text-muted hover:bg-card hover:text-white/80"}`
               }
             >
               <Icon />
@@ -33,7 +33,7 @@ export default function Layout() {
           ))}
         </nav>
       </aside>
-      <main className="p-8 w-4/5 overflow-y-auto scrollbar-none">
+      <main className="p-8 w-3/4 overflow-y-auto scrollbar-none">
         <Outlet />
       </main>
     </div>
