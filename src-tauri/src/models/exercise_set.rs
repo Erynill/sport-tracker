@@ -4,12 +4,12 @@ use serde::{ Deserialize, Serialize };
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExerciseSet {
-  id: i64,
-  exercise_id: i64,
-  session_id: i64,
-  rep: i32,
-  weight_set: i32,
-  rpe: Option<f64>,
+  pub id: i64,
+  pub exercise_id: i64,
+  pub session_id: i64,
+  pub rep: i32,
+  pub weight_set: i32,
+  pub rpe: Option<f64>,
 }
 
 impl ExerciseSet {

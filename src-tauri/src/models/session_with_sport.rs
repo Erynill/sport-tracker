@@ -6,8 +6,8 @@ use crate::models::{ Session, Sport };
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionWithSport {
-  session: Session,
-  sport: Sport,
+  pub session: Session,
+  pub sport: Sport,
 }
 
 impl SessionWithSport {

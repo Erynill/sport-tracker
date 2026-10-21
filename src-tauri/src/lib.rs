@@ -3,6 +3,7 @@ use tauri::Manager;
 mod db;
 mod models;
 mod commands;
+mod services;
 
 use commands::sport;
 use commands::exercise;
@@ -23,7 +24,8 @@ pub fn run() {
         sport::list_sports,
         exercise::list_exercises_by_sport,
         session::create_full_session,
-        session::list_sessions_history
+        session::list_sessions_history,
+        session::get_full_session
       ]
     )
     .run(tauri::generate_context!())

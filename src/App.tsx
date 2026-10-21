@@ -6,6 +6,7 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NewSession from "./pages/NewSession";
+import Session from "./pages/Session";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/history" element={<History />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/session/new" element={<NewSession />} />
+            <Route path="/session/:id" element={<Session />} />
           </Route>
         </Routes>
       </HashRouter>
