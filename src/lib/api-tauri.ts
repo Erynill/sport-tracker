@@ -13,5 +13,7 @@ export const api = {
   session: {
     createFull: (payload: NewSessionPayload) => invoke<number>("create_full_session", { payload }),
     listWithSport: () => invoke<SessionWithSport[]>("list_sessions_history"),
+    getFullSession: (sessionId: number) => invoke<FullSession>("get_full_session", { sessionId }),
+    deleteSession: (sessionId: number) => invoke<number>("delete_session", { sessionId }),
   },
 };

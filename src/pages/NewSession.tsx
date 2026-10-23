@@ -143,7 +143,7 @@ export default function NewSession() {
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex justify-between">
-              <h3 className="text-xl">Exercices</h3>
+              <h3 className="text-2xl">Exercices</h3>
               <ExercisePicker sportId={sportId} onSelect={handleAddExercise} />
             </div>
             {exercises.map((exercise, i) => (

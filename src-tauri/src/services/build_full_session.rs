@@ -7,7 +7,7 @@ pub fn build_full_session(session: SessionWithSport, rows: Vec<SetWithExercise>)
   let mut exercises: Vec<ExerciseDetail> = Vec::new();
 
   for row in rows {
-    let existing = exercises.iter().position(|exercise| exercise.id == row.set.id);
+    let existing = exercises.iter().position(|exercise| exercise.id == row.set.exercise_id);
     match existing {
       Some(i) => exercises[i].sets.push(row.set),
       None =>

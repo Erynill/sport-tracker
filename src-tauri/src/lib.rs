@@ -25,7 +25,8 @@ pub fn run() {
         exercise::list_exercises_by_sport,
         session::create_full_session,
         session::list_sessions_history,
-        session::get_full_session
+        session::get_full_session,
+        session::delete_session
       ]
     )
     .run(tauri::generate_context!())

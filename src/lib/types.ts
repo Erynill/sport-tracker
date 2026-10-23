@@ -19,7 +19,7 @@ interface Session {
   id: number;
   sportId: number;
   name: string;
-  dateSession: Date;
+  dateSession: string;
   notes?: string;
 }
 
@@ -38,6 +38,25 @@ interface WeightTracking {
 interface SessionWithSport {
   session: Session;
   sport: Sport;
+}
+
+interface ExerciseDetail {
+  id: number;
+  name: string;
+  totalSets: number;
+  totalReps: number;
+  estimated1rm: number;
+  sets: ExerciseSet[];
+}
+
+interface FullSession {
+  session: Session;
+  sport: Sport;
+  exercises: ExerciseDetail[];
+  totalExercises: number;
+  totalSets: number;
+  totalReps: number;
+  averageRpe?: number;
 }
 
 //form types

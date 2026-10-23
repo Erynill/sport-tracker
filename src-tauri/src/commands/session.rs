@@ -89,16 +89,16 @@ pub async fn list_sessions_history(db: State<'_, DbConnection>) -> Result<Vec<Se
 }
 
 #[tauri::command]
-pub async fn get_full_session(db: State<'_, DbConnection>, id: i64) -> Result<FullSession, String> {
+pub async fn get_full_session(db: State<'_, DbConnection>, session_id: i64) -> Result<FullSession, String> {
   let conn = db.0.lock().map_err(|e| e.to_string())?;
 
   let session_with_sport = conn
     .query_row(
       "SELECT s.id, s.sport_id, s.name AS session_name, s.date_session, s.notes, sp.name AS sport_name, sp.icon
-    FROM session AS s
+    FROM sessions AS s
     JOIN sports AS sp ON sp.id = s.sport_id
     WHERE s.id = ?1",
-      params![id],
+      params![session_id],
       |row| SessionWithSport::from_row(row)
     )
     .map_err(|e| e.to_string())?;
@@ -114,10 +114,21 @@ pub async fn get_full_session(db: State<'_, DbConnection>, id: i64) -> Result<Fu
     .map_err(|e| e.to_string())?;
 
   let rows = stmt
-    .query_map(params![id], |row| SetWithExercise::from_row(row))
+    .query_map(params![session_id], |row| SetWithExercise::from_row(row))
     .map_err(|e| e.to_string())?
     .collect::<Result<Vec<SetWithExercise>>>()
     .map_err(|e| e.to_string())?;
 
   Ok(build_full_session(session_with_sport, rows))
+}
+
+#[tauri::command]
+pub async fn delete_session(db: State<'_, DbConnection>, session_id: i64) -> Result<i64, String> {
+  let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+  let deleted = conn
+    .execute("DELETE FROM sessions WHERE id = ?1", params![session_id])
+    .map_err(|e| e.to_string())? as i64;
+
+  Ok(deleted)
 }

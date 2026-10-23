@@ -9,7 +9,7 @@ const links = [
 
 export default function Layout() {
   return (
-    <div className="flex h-screen bg-app text-white font-medium">
+    <div className="flex h-screen bg-app text-white font-medium text-lg">
       <aside className="flex flex-col w-1/4 bg-sidebar p-6 border-line border-r gap-10">
         <div className="flex flex-row gap-2 items-center">
           <div className="bg-accent p-1 rounded-lg">

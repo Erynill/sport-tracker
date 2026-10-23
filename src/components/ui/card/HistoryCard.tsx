@@ -21,7 +21,7 @@ export default function HistoryCard({ icon, title, subtitle, date, onClick }: Hi
           <DynamicIcon name={icon as IconName} size={32} className="text-accent-soft" />
         </div>
         <div className="text-left flex-1">
-          <p className="text-lg">{title}</p>
+          <p className="text-lg capitalize">{title}</p>
           <p className="text-muted">{subtitle}</p>
         </div>
         <div className="flex text-muted gap-5">

@@ -66,6 +66,31 @@ pub fn migrations() -> Migrations<'static> {
       //Migration 4 : ajout de la colonne rpe (ressenti noté sur entre 1 et 10) sur la table sets
       M::up("
       ALTER TABLE sets ADD COLUMN rpe REAL CHECK (rpe BETWEEN 1 AND 10);
+      "),
+
+      //Migration 5 : ajout de la contrainte ON DELETE CASCADE sur les foreign keys de la table sets
+      M::up(
+        "
+      ALTER TABLE sets RENAME TO _sets_old;
+
+      CREATE TABLE sets (
+        id INTEGER PRIMARY KEY,
+        exercise_id INTEGER NOT NULL,
+        session_id INTEGER NOT NULL,
+        rep INTEGER NOT NULL CHECK (rep > 0),
+        weight_set INTEGER NOT NULL CHECK (weight_set >= 0),
+        rpe REAL CHECK (rpe BETWEEN 1 AND 10),
+        FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE,
+        FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
+      );
+
+      INSERT INTO sets SELECT * FROM _sets_old;
+      "
+      ).foreign_key_check(),
+
+      //Migration 6 : supression de l'ancienne table sets suite à la migration 5
+      M::up("
+      DROP TABLE _sets_old;
       ")
     ]
   )

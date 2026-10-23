@@ -4,6 +4,19 @@ import HistoryCard from "../components/ui/card/HistoryCard";
 import { useNavigate } from "react-router-dom";
 import { useSessionWithSport } from "../hooks/useSession";
 
+function formatDate(date: string): string {
+  const formatedDate = new Date(date);
+  const currentDate = new Date();
+  const isCurrentYear = formatedDate.getFullYear() === currentDate.getFullYear();
+
+  switch (isCurrentYear) {
+    case true:
+      return formatedDate.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" });
+    case false:
+      return formatedDate.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+  }
+}
+
 export default function History() {
   const navigate = useNavigate();
   const { data: history } = useSessionWithSport();
@@ -17,10 +30,12 @@ export default function History() {
         {history ? (
           history.map((session) => (
             <HistoryCard
+              key={session.session.id}
               icon={session.sport.icon}
               title={session.session.name}
               subtitle={session.sport.name}
-              date={session.session.dateSession.toString()}
+              date={formatDate(session.session.dateSession)}
+              onClick={() => navigate(`/session/${session.session.id}`)}
             />
           ))
         ) : (

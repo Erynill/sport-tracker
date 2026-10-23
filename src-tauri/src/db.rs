@@ -17,7 +17,9 @@ pub fn init_db(app_handle: &AppHandle) -> Result<DbConnection, Box<dyn Error>> {
 
   let mut conn = pool::open_connection(db_path)?;
 
+  conn.pragma_update(None, "foreign_keys", false)?;
   schema::migrations().to_latest(&mut conn)?;
+  conn.pragma_update(None, "foreign_keys", true)?;
 
   Ok(DbConnection(Mutex::new(conn)))
 }
